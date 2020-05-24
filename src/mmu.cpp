@@ -1,5 +1,6 @@
 #include "mmu.h"
 
+#include <signal.h>
 #include <system_error>
 
 #include <sys/mman.h>
@@ -36,6 +37,8 @@ constexpr size_t MULTI_USE_LENGTH = 0x1000U;
 
 namespace dmg {
 
+mmu* mmu::s_unique_mmu = nullptr;
+
 mmu::mmu() 
     : m_memory{MEMORY_SIZE} {
     
@@ -61,11 +64,84 @@ mmu::mmu()
     m_memory.mirror(LOWER_ECHO_OFFSET, WRAM_BANK_0_OFFSET, LOWER_ECHO_LENGTH, PROT_READ | PROT_WRITE);
 
     // 0xf000 .. 0xffff: Multiple uses: higher part of echo, object attribute memory, hardware registers, HRAM
-    m_memory.map(MULTI_USE_OFFSET, MULTI_USE_LENGTH, PROT_READ);
+    m_memory.map(MULTI_USE_OFFSET, MULTI_USE_LENGTH, 0);
+
+    if (s_unique_mmu == nullptr) {
+        s_unique_mmu = this;
+
+        struct sigaction sa { 0 };
+        sa.sa_sigaction = sigsegv_handler;
+        sigaction(SIGSEGV, &sa, nullptr);
+    }
+}
+
+mmu::~mmu() {
+    if (s_unique_mmu == this) {
+        s_unique_mmu = nullptr;
+    }
 }
 
 u8& mmu::operator[](u16 i) {
     return m_memory[i];
+}
+
+void mmu::sigsegv_handler(int sig, siginfo_t* info, void* ucontext) {
+    void* address = info->si_addr;
+
+    mcontext_t* mcontext = &reinterpret_cast<ucontext_t*>(ucontext)->uc_mcontext;
+
+    // const bool is_read_fault = mcontext->gregs[REG_ERR];
+
+    // DAMAGE jit convention
+    //
+    // All operations accessing the mmu must go through r10/r11,
+    // where r10 always holds the address read from/written to and r11 is either the src or dst.
+    //
+    // Examples:
+    // 
+    // * Instead of emitting
+    //
+    //      mov [0x1000], al, emit
+    //
+    // emit
+    //
+    //      mov r10, 0x1000
+    //      mov r11b, al
+    //      mov BYTE [r10], r11b
+    //
+    // * Instead of emitting
+    //
+    //      mov bh, [0x1234]
+    //
+    // emit
+    //
+    //      mov r10, 0x1234
+    //      mov r11b, BYTE [r10]
+    //      mov bh, r11b ; this doesn't actually work. need to shift or swap... annoying
+    //
+    // Only BYTEs and WORDs can be read/written. This reduces the legal reads and writes to:
+    //
+    // Reads:
+    //
+    // * mov r11b, BYTE [r10]: 0x45 0x8a 0x1a
+    // * mov r11w, WORD [r10]: 0x66 0x45 0x8b 0x1a
+    //
+    // Writes:
+    //
+    // * mov BYTE [r10], r11b: 0x45 0x88 0x1a
+    // * mov WORD [r11], r11w: 0x66 0x45 0x89 0x1a
+
+    const u8* rip = reinterpret_cast<u8*>(mcontext->gregs[REG_RIP]);
+
+    if (rip[0] == 0x45 && rip[1] == 0x8a && rip[2] == 0x1a) {
+        // mov r11b, BYTE [r10]
+        mcontext->gregs[REG_R11] = 57;
+        mcontext->gregs[REG_RIP] += 3;
+    } else if (rip[0] == 0x66 && rip[1] == 0x45 && rip[2] == 0x8b && rip[3] == 0x1a) {
+        // mov r11w, WORD [r10]
+        mcontext->gregs[REG_R11] = 89;
+        mcontext->gregs[REG_RIP] += 4;
+    }
 }
 
 }
