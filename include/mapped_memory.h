@@ -25,6 +25,7 @@ public:
     }
 private:
     u8* m_memory = nullptr;
+    int m_fd = 0;
     const size_type m_size;
 
 };
