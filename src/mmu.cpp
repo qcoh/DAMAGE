@@ -82,7 +82,7 @@ mmu::~mmu() {
 }
 
 u8& mmu::operator[](u16 i) {
-    return m_memory[i];
+    return m_memory.get_protected()[i];
 }
 
 void mmu::sigsegv_handler(int sig, siginfo_t* info, void* ucontext) {

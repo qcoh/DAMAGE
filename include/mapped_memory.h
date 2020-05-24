@@ -22,11 +22,12 @@ public:
     void map(offset_type, size_type, int);
     void mirror(offset_type, offset_type, size_type, int);
 
-    inline u8& operator[](offset_type offset) {
-        return m_memory[offset];
-    }
+    inline u8* get_protected() const noexcept { return m_protected; }
+    inline u8* get_unprotected() const noexcept { return m_unprotected; }
+
 private:
-    u8* m_memory = nullptr;
+    u8* m_protected = nullptr;
+    u8* m_unprotected = nullptr;
     int m_fd = 0;
     const size_type m_size;
 
