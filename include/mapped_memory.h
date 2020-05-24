@@ -17,8 +17,10 @@ public:
 
     mapped_memory(mapped_memory&&);
     mapped_memory& operator=(mapped_memory&&);
-
+    
     void protect(offset_type, size_type, int);
+    void map(offset_type, size_type, int);
+    void mirror(offset_type, offset_type, size_type, int);
 
     inline u8& operator[](offset_type offset) {
         return m_memory[offset];

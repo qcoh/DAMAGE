@@ -16,4 +16,32 @@ SCENARIO("Writing to and reading from MMU") {
             }
         }
     }
+
+    GIVEN("A MMU instance, an address in wram0 and a value") {
+        dmg::mmu mmu{};
+        u16 wram_address = 0xc123;
+        u8 value = 100;
+
+        WHEN("Writing the value to the address") {
+            mmu[wram_address] = value;
+
+            THEN("The value can be read in the echo memory") {
+                REQUIRE(mmu[0xe123] == value);
+            }
+        }
+    }
+
+    GIVEN("A MMU instance, an address in the lower echo memory and a value") {
+        dmg::mmu mmu{};
+        u16 wram_address = 0xe200;
+        u8 value = 100;
+
+        WHEN("Writing the value to the address") {
+            mmu[wram_address] = value;
+
+            THEN("The value can be read in wram0") {
+                REQUIRE(mmu[0xc200] == value);
+            }
+        }
+    }
 }
