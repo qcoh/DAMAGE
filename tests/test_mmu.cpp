@@ -5,14 +5,14 @@
 SCENARIO("Writing to and reading from MMU") {
     GIVEN("A MMU instance, an address and a value") {
         dmg::mmu mmu{};
-        u16 address = 123;
+        u16 vram_address = 0x8123;
         u8 value = 25;
 
         WHEN("Writing the value to address") {
-            mmu[address] = value;
+            mmu[vram_address] = value;
 
             THEN("The value at the address is the same") {
-                REQUIRE(mmu[address] == value);
+                REQUIRE(mmu[vram_address] == value);
             }
         }
     }

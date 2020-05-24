@@ -1,13 +1,14 @@
 #pragma once
 
 #include "types.h"
+#include "mapped_memory.h"
 
 namespace dmg {
 
 class mmu final {
 public:
     mmu();
-    ~mmu();
+    ~mmu() = default;
 
     mmu(const mmu&) = delete;
     mmu& operator=(const mmu&) = delete;
@@ -17,7 +18,7 @@ public:
 
     u8& operator[](u16);
 private:
-    u8* m_memory = nullptr;
+    mapped_memory m_memory;
 };
 
 }
