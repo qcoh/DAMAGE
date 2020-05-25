@@ -1,6 +1,8 @@
 set(SOURCES
     mmu.cpp
     mapped_memory.cpp
+    shared_file_descriptor.cpp
+    file.cpp
 )
 
 add_library(damage_lib
