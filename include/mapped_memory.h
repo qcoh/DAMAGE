@@ -1,6 +1,8 @@
 #pragma once
 
 #include "types.h"
+#include "shared.h"
+#include "anonymous_file.h"
 
 namespace dmg {
 
@@ -9,28 +11,19 @@ public:
     using size_type = decltype(sizeof(1));
     using offset_type = size_type;
 
-    mapped_memory(size_type);
+    mapped_memory(shared<anonymous_file>, size_type);
     ~mapped_memory();
-
-    mapped_memory(const mapped_memory&) = delete;
-    mapped_memory& operator=(const mapped_memory&) = delete;
-
-    mapped_memory(mapped_memory&&);
-    mapped_memory& operator=(mapped_memory&&);
-    
+  
     void protect(offset_type, size_type, int);
     void map(offset_type, size_type, int);
     void mirror(offset_type, offset_type, size_type, int);
 
-    inline u8* get_protected() const noexcept { return m_protected; }
-    inline u8* get_unprotected() const noexcept { return m_unprotected; }
+    inline u8& operator[](u16 addr) const noexcept { return m_memory[addr]; }
 
 private:
-    u8* m_protected = nullptr;
-    u8* m_unprotected = nullptr;
-    int m_fd = 0;
+    shared<anonymous_file> m_underlying_file;
+    u8* m_memory;
     const size_type m_size;
-
 };
 
 }

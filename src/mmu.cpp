@@ -40,31 +40,35 @@ namespace dmg {
 mmu* mmu::s_unique_mmu = nullptr;
 
 mmu::mmu() 
-    : m_memory{MEMORY_SIZE} {
-    
+    : m_file{anonymous_file{MEMORY_SIZE}}
+    , m_protected{m_file, MEMORY_SIZE}
+    , m_unprotected{m_file, MEMORY_SIZE}
+{
     // 0x0000 .. 0x3fff: ROM bank 0
-    m_memory.map(ROM_BANK_0_OFFSET, ROM_BANK_0_LENGTH, PROT_READ);
+    m_protected.map(ROM_BANK_0_OFFSET, ROM_BANK_0_LENGTH, PROT_READ);
 
     // 0x4000 .. 0x7fff: ROM bank 1 to ???
-    m_memory.map(ROM_BANK_N_OFFSET, ROM_BANK_N_LENGTH, PROT_READ);
+    m_protected.map(ROM_BANK_N_OFFSET, ROM_BANK_N_LENGTH, PROT_READ);
 
     // 0x8000 .. 0x9fff: VRAM
-    m_memory.map(VRAM_OFFSET, VRAM_LENGTH, PROT_READ | PROT_WRITE);
+    m_protected.map(VRAM_OFFSET, VRAM_LENGTH, PROT_READ | PROT_WRITE);
 
     // 0xa000 .. 0xbfff: External RAM
-    m_memory.map(EXTERNAL_RAM_OFFSET, EXTERNAL_RAM_LENGTH, PROT_READ | PROT_WRITE);
+    m_protected.map(EXTERNAL_RAM_OFFSET, EXTERNAL_RAM_LENGTH, PROT_READ | PROT_WRITE);
 
     // 0xc000 .. 0xcfff: WRAM bank 0
-    m_memory.map(WRAM_BANK_0_OFFSET, WRAM_BANK_0_LENGTH, PROT_READ | PROT_WRITE);
+    m_protected.map(WRAM_BANK_0_OFFSET, WRAM_BANK_0_LENGTH, PROT_READ | PROT_WRITE);
 
     // 0xd000 .. 0xdfff: WRAM bank 1
-    m_memory.map(WRAM_BANK_1_OFFSET, WRAM_BANK_1_LENGTH, PROT_READ | PROT_WRITE);
+    m_protected.map(WRAM_BANK_1_OFFSET, WRAM_BANK_1_LENGTH, PROT_READ | PROT_WRITE);
 
     // 0xe000 .. 0xefff: Lower part of echo (mirror 0xc000 .. 0xcfff)
-    m_memory.mirror(LOWER_ECHO_OFFSET, WRAM_BANK_0_OFFSET, LOWER_ECHO_LENGTH, PROT_READ | PROT_WRITE);
+    m_protected.mirror(LOWER_ECHO_OFFSET, WRAM_BANK_0_OFFSET, LOWER_ECHO_LENGTH, PROT_READ | PROT_WRITE);
 
     // 0xf000 .. 0xffff: Multiple uses: higher part of echo, object attribute memory, hardware registers, HRAM
-    m_memory.map(MULTI_USE_OFFSET, MULTI_USE_LENGTH, 0);
+    m_protected.map(MULTI_USE_OFFSET, MULTI_USE_LENGTH, 0);
+
+    m_unprotected.protect(0, MEMORY_SIZE, PROT_READ | PROT_WRITE);
 
     if (s_unique_mmu == nullptr) {
         s_unique_mmu = this;
@@ -82,7 +86,7 @@ mmu::~mmu() {
 }
 
 u8& mmu::operator[](u16 i) {
-    return m_memory.get_protected()[i];
+    return m_protected[i];
 }
 
 void mmu::sigsegv_handler(int sig, siginfo_t* info, void* ucontext) {

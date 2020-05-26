@@ -20,7 +20,9 @@ public:
 
     u8& operator[](u16);
 private:
-    mapped_memory m_memory;
+    shared<anonymous_file> m_file;
+    mapped_memory m_protected;
+    mapped_memory m_unprotected;
 
     static mmu* s_unique_mmu;
     static void sigsegv_handler(int, siginfo_t*, void*);
