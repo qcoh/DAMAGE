@@ -2,9 +2,9 @@
 
 #include "types.h"
 
+
 struct cpu;
 struct mmu;
-
 typedef void (*instruction_function)(struct cpu *, struct mmu *);
 
 struct instruction {
@@ -14,4 +14,4 @@ struct instruction {
 	instruction_function fp;
 };
 
-struct instruction get_instruction(u8);
+typedef struct instruction (*fetch_function)(u8);

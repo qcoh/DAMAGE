@@ -1,5 +1,5 @@
 CFLAGS+=-std=c11 -I include/ -MMD -MP -Wall -Wextra -pedantic -g
-LDFLAGS+=
+LDLIBS+=-ldl
 
 all: src/damage src/lr35902.so
 src/damage: src/damage.o src/cpu.o
