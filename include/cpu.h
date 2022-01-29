@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-typedef struct {
+struct cpu {
 	u32 cc;
 
 	u16 sp;
@@ -15,7 +15,7 @@ typedef struct {
 	reg bc;
 	reg de;
 	reg hl;
-} cpu;
+};
 
 #define REG_A(r) (r).af.hi
 #define REG_F(r) (r).af.lo
@@ -25,3 +25,7 @@ typedef struct {
 #define REG_E(r) (r).de.lo
 #define REG_H(r) (r).hl.hi
 #define REG_L(r) (r).hl.lo
+
+struct mmu;
+
+void step(struct cpu *, struct mmu *);

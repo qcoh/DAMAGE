@@ -1,7 +1,7 @@
 CFLAGS+=-std=c11 -I include/ -MMD -MP -Wall -Wextra -pedantic -g
 LDFLAGS+=
 
-src/damage: src/damage.o
+src/damage: src/damage.o src/cpu.o
 
 .PHONY: clean
 clean:
