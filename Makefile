@@ -2,7 +2,7 @@ CFLAGS+=-std=c11 -I include/ -MMD -MP -Wall -Wextra -pedantic -g
 LDLIBS+=-ldl
 
 all: src/damage src/lr35902.so
-src/damage: src/damage.o src/cpu.o
+src/damage: src/damage.o src/cpu.o src/log.o
 
 src/lr35902.so: src/lr35902.o 
 	$(CC) $(CPPFLAGS) $(CFLAGS) $^ -o $@ -fPIC -shared
