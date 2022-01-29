@@ -11,10 +11,10 @@ struct cpu {
 	u16 sp;
 	u16 pc;
 
-	reg af;
-	reg bc;
-	reg de;
-	reg hl;
+	struct reg af;
+	struct reg bc;
+	struct reg de;
+	struct reg hl;
 };
 
 #define REG_A(r) (r).af.hi
