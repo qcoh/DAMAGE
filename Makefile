@@ -6,13 +6,13 @@ all: src/damage src/lr35902.so test/test_main
 test: test/test_main
 	test/test_main
 
-src/damage: src/damage.o src/cpu.o src/log.o src/types.o
+src/damage: src/damage.o src/cpu.o src/log.o src/types.o src/fetch.o
 test/test_main: test/test_main.o test/test_types.o src/types.o
 
 src/lr35902.so: src/lr35902.o 
-	$(CC) $(CPPFLAGS) $(CFLAGS) $^ -o $@ -fPIC -shared
+	$(CC) $(CPPFLAGS) $(CFLAGS) $< -o $@ -fPIC -shared
 src/lr35902.o: src/lr35902.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) $^ -o $@ -c -fPIC
+	$(CC) $(CPPFLAGS) $(CFLAGS) $< -o $@ -c -fPIC
 
 .PHONY: clean
 clean:

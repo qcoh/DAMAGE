@@ -2,7 +2,6 @@
 
 #include "types.h"
 
-
 struct cpu;
 struct mmu;
 typedef void (*instruction_function)(struct cpu *, struct mmu *);
