@@ -11,6 +11,8 @@
 #include <dlfcn.h>
 
 void load(struct fetcher *fetcher, const char *filename) {
+	debug("Loading %s\n", filename);
+
 	if ((fetcher->handle = dlopen(filename, RTLD_LAZY)) == NULL) {
 		critical("dlopen: %s", dlerror());
 		exit(EXIT_FAILURE);
@@ -24,8 +26,6 @@ void load(struct fetcher *fetcher, const char *filename) {
 
 int reload(struct fetcher *fetcher) {
 	char buf[10 * (sizeof(struct inotify_event) + 16 + 1)];
-
-	debug("reading from inotify\n");
 
 	// blocks!
 	int bytes_read = read(fetcher->inotify_fd, buf, sizeof(buf));
@@ -46,17 +46,11 @@ int reload(struct fetcher *fetcher) {
 			exit(EXIT_FAILURE);
 		}
 
-		debug("Inotify event: %s\n", ev->name, ev->mask);
-		if (ev->mask & IN_CLOSE) {
-			debug("IN_CLOSE\n");
-		}
-
 		const int library_ready = 
 			(ev->mask & IN_CLOSE_WRITE) && (strncmp(ev->name, fetcher->filename, 16) == 0);
 
 		if (library_ready) {
 			dlclose(fetcher->handle);
-			debug("Loading %s\n", fetcher->filename);
 			load(fetcher, fetcher->filename);
 			return 1;
 		}

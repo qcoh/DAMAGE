@@ -5,3 +5,7 @@
 src/damage
 *.gch
 *.so
+*.rom
+*.gb
+*.bin
+test/test_main
