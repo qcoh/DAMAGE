@@ -84,6 +84,12 @@ struct fetcher new_fetcher(const char *directory, const char *filename) {
 	return ret;
 }
 
+void shutdown_fetcher(struct fetcher *f) {
+	inotify_rm_watch(f->inotify_fd, f->watch_fd);
+	close(f->inotify_fd);
+	dlclose(f->handle);
+}
+
 struct instruction fetch(struct fetcher *fetcher, u8 opcode) {
 	struct instruction ret = {0};
 

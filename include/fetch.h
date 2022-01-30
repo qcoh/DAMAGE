@@ -15,6 +15,7 @@ struct fetcher {
 };
 
 struct fetcher new_fetcher(const char *, const char *);
+void shutdown_fetcher(struct fetcher *);
 
 struct instruction;
 struct instruction fetch(struct fetcher*, u8);

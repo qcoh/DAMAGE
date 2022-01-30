@@ -10,5 +10,7 @@ int main() {
 
 	struct instruction foo = fetch(&fetcher, 0x01);
 
+	shutdown_fetcher(&fetcher);
+
 	return 0;
 }
