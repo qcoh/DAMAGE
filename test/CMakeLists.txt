@@ -1,5 +1,6 @@
 set(SOURCES
 	test_word.cpp
+	test_bitref.cpp
 )
 
 add_executable(damage_test

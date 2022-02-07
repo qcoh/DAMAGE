@@ -1,8 +1,6 @@
 #include "word.h"
 
-#include <catch2/catch_test_macros.hpp>
-#include "rapidcheck.h"
-#include "prop.h"
+#include "test.h"
 
 SCENARIO("High and low bytes of a word") {
 	GIVEN("high and low bytes and a word comprising the two") {
