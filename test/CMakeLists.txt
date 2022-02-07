@@ -1,5 +1,5 @@
 set(SOURCES
-	test_initial.cpp
+	test_word.cpp
 )
 
 add_executable(damage_test
