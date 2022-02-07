@@ -21,5 +21,7 @@ target_include_directories(damage_lib
 add_subdirectory("third-party/Catch2")
 list(APPEND CMAKE_MODULE_PATH "${Catch2_SOURCE_DIR}/extras")
 
+add_subdirectory("third-party/rapidcheck")
+
 enable_testing()
 add_subdirectory(test)

@@ -15,6 +15,7 @@ target_link_libraries(damage_test
 	PRIVATE
 	damage_lib
 	Catch2::Catch2WithMain
+	rapidcheck
 )
 
 include(CTest)
