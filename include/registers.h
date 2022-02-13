@@ -69,3 +69,20 @@ struct at_hl {
   u8 get(cpu &cpu_, mmu &mmu_) { return mmu_.read_u8(cpu_.hl); }
   void set(cpu &cpu_, mmu &mmu_, u8 v) { mmu_.write_u8(cpu_.hl, v); }
 };
+
+struct zf {
+  bool get(cpu &cpu_, mmu &mmu_) { return cpu_.zf; }
+  void set(cpu &cpu_, mmu &mmu_, bool v) { cpu_.zf = v; }
+};
+struct nf {
+  bool get(cpu &cpu_, mmu &mmu_) { return cpu_.zf; }
+  void set(cpu &cpu_, mmu &mmu_, bool v) { cpu_.zf = v; }
+};
+struct hf {
+  bool get(cpu &cpu_, mmu &mmu_) { return cpu_.zf; }
+  void set(cpu &cpu_, mmu &mmu_, bool v) { cpu_.zf = v; }
+};
+struct cf {
+  bool get(cpu &cpu_, mmu &mmu_) { return cpu_.zf; }
+  void set(cpu &cpu_, mmu &mmu_, bool v) { cpu_.zf = v; }
+};

@@ -282,3 +282,123 @@ SCENARIO("ldd_at_hl") {
     });
   }
 }
+
+SCENARIO("bit n") {
+  GIVEN("cpu, mmu") {
+    cpu cpu_;
+
+    u8 bios_data[0x100] = {0};
+    bios bios_{std::begin(bios_data)};
+    u8 romonly_data[0x8000] = {0};
+    romonly r{std::begin(romonly_data)};
+    mmu m{bios_, r};
+
+    rc::prop("calling bit<b, 7>", [&cpu_, &m]() {
+      cpu_.b = *rc::gen::arbitrary<u8>();
+
+      bit<b, 7>(cpu_, m);
+
+      RC_ASSERT(cpu_.zf == !!(cpu_.b & (1 << 7)));
+      RC_ASSERT(cpu_.nf == false);
+      RC_ASSERT(cpu_.hf == true);
+    });
+    rc::prop("calling bit<c, 7>", [&cpu_, &m]() {
+      cpu_.c = *rc::gen::arbitrary<u8>();
+
+      bit<c, 7>(cpu_, m);
+
+      RC_ASSERT(cpu_.zf == !!(cpu_.c & (1 << 7)));
+      RC_ASSERT(cpu_.nf == false);
+      RC_ASSERT(cpu_.hf == true);
+    });
+    rc::prop("calling bit<d, 7>", [&cpu_, &m]() {
+      cpu_.d = *rc::gen::arbitrary<u8>();
+
+      bit<d, 7>(cpu_, m);
+
+      RC_ASSERT(cpu_.zf == !!(cpu_.d & (1 << 7)));
+      RC_ASSERT(cpu_.nf == false);
+      RC_ASSERT(cpu_.hf == true);
+    });
+    rc::prop("calling bit<e, 7>", [&cpu_, &m]() {
+      cpu_.e = *rc::gen::arbitrary<u8>();
+
+      bit<e, 7>(cpu_, m);
+
+      RC_ASSERT(cpu_.zf == !!(cpu_.e & (1 << 7)));
+      RC_ASSERT(cpu_.nf == false);
+      RC_ASSERT(cpu_.hf == true);
+    });
+    rc::prop("calling bit<h, 7>", [&cpu_, &m]() {
+      cpu_.h = *rc::gen::arbitrary<u8>();
+
+      bit<h, 7>(cpu_, m);
+
+      RC_ASSERT(cpu_.zf == !!(cpu_.h & (1 << 7)));
+      RC_ASSERT(cpu_.nf == false);
+      RC_ASSERT(cpu_.hf == true);
+    });
+    rc::prop("calling bit<l, 7>", [&cpu_, &m]() {
+      cpu_.l = *rc::gen::arbitrary<u8>();
+
+      bit<l, 7>(cpu_, m);
+
+      RC_ASSERT(cpu_.zf == !!(cpu_.l & (1 << 7)));
+      RC_ASSERT(cpu_.nf == false);
+      RC_ASSERT(cpu_.hf == true);
+    });
+    rc::prop("calling bit<at_hl, 7>", [&cpu_, &m]() {
+      const u8 rand_v = *rc::gen::arbitrary<u8>();
+      cpu_.hl = *rc::gen::inRange<u16>(0xc000, 0xcfff);
+      m.write_u8(cpu_.hl, rand_v);
+
+      bit<at_hl, 7>(cpu_, m);
+
+      RC_ASSERT(cpu_.zf == !!(rand_v & (1 << 7)));
+      RC_ASSERT(cpu_.nf == false);
+      RC_ASSERT(cpu_.hf == true);
+    });
+    rc::prop("calling bit<a, 7>", [&cpu_, &m]() {
+      cpu_.a = *rc::gen::arbitrary<u8>();
+
+      bit<a, 7>(cpu_, m);
+
+      RC_ASSERT(cpu_.zf == !!(cpu_.a & (1 << 7)));
+      RC_ASSERT(cpu_.nf == false);
+      RC_ASSERT(cpu_.hf == true);
+    });
+  }
+}
+
+SCENARIO("jr n") {
+  GIVEN("cpu, mmu") {
+    cpu cpu_;
+
+    u8 bios_data[0x100] = {0};
+    bios bios_{std::begin(bios_data)};
+    u8 romonly_data[0x8000] = {0};
+    romonly r{std::begin(romonly_data)};
+    mmu m{bios_, r};
+
+    rc::prop("calling jr_n<zf>, zf = false", [&cpu_, &m]() {
+      cpu_.pc = 0xc100;
+      cpu_.zf = false;
+      cpu_.im = *rc::gen::arbitrary<u8>();
+      const i8 offset = cpu_.im;
+
+      jr_n<zf>(cpu_, m);
+
+      RC_ASSERT(cpu_.pc == (0xc100 + static_cast<i8>(cpu_.im) + 2));
+    });
+    rc::prop("calling jr_n<zf>, zf = true", [&cpu_, &m]() {
+      cpu_.pc = 0xc100;
+      cpu_.zf = true;
+      cpu_.im = *rc::gen::arbitrary<u8>();
+      const i8 offset = cpu_.im;
+
+      jr_n<zf>(cpu_, m);
+
+      RC_ASSERT(cpu_.pc == 0xc100 + 2);
+    });
+  }
+}

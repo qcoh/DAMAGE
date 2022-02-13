@@ -59,3 +59,25 @@ void ldd_at_hl(cpu &cpu_, mmu &mmu_) {
   cpu_.cc += 8;
   cpu_.pc += 1;
 }
+
+template <typename Register, int I>
+void bit(cpu &cpu_, mmu &mmu_, Register r = {}) {
+  cpu_.zf = r.get(cpu_, mmu_) & (1 << I);
+  cpu_.nf = false;
+  cpu_.hf = true;
+
+  cpu_.cc += 8;
+  if constexpr (std::is_same<Register, at_hl>::value) {
+    cpu_.cc += 8;
+  }
+  cpu_.pc += 2;
+}
+
+template <typename Register> void jr_n(cpu &cpu_, mmu &mmu_, Register r = {}) {
+  if (!r.get(cpu_, mmu_)) {
+    cpu_.pc += static_cast<i8>(cpu_.im);
+    cpu_.cc += 4;
+  }
+  cpu_.cc += 8;
+  cpu_.pc += 2;
+}
