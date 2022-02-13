@@ -6,6 +6,7 @@ set(CMAKE_BUILD_TYPE "Debug")
 set(SOURCES
 	src/lr35902.cpp
 	src/mmu.cpp
+	src/gameboy.cpp
 	src/bios.cpp
 	src/romonly.cpp
 )
