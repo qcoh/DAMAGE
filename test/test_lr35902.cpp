@@ -402,3 +402,73 @@ SCENARIO("jr n") {
     });
   }
 }
+
+SCENARIO("ld im") {
+  GIVEN("cpu, mmu") {
+    cpu cpu_;
+
+    u8 bios_data[0x100] = {0};
+    bios bios_{std::begin(bios_data)};
+    u8 romonly_data[0x8000] = {0};
+    romonly r{std::begin(romonly_data)};
+    mmu m{bios_, r};
+
+    rc::prop("calling ld_im<b>", [&cpu_, &m]() {
+      cpu_.im = *rc::gen::arbitrary<u8>();
+
+      ld_im<b>(cpu_, m);
+
+      RC_ASSERT(cpu_.b == cpu_.im);
+    });
+    rc::prop("calling ld_im<c>", [&cpu_, &m]() {
+      cpu_.im = *rc::gen::arbitrary<u8>();
+
+      ld_im<c>(cpu_, m);
+
+      RC_ASSERT(cpu_.c == cpu_.im);
+    });
+    rc::prop("calling ld_im<d>", [&cpu_, &m]() {
+      cpu_.im = *rc::gen::arbitrary<u8>();
+
+      ld_im<d>(cpu_, m);
+
+      RC_ASSERT(cpu_.d == cpu_.im);
+    });
+    rc::prop("calling ld_im<e>", [&cpu_, &m]() {
+      cpu_.im = *rc::gen::arbitrary<u8>();
+
+      ld_im<e>(cpu_, m);
+
+      RC_ASSERT(cpu_.e == cpu_.im);
+    });
+    rc::prop("calling ld_im<h>", [&cpu_, &m]() {
+      cpu_.im = *rc::gen::arbitrary<u8>();
+
+      ld_im<h>(cpu_, m);
+
+      RC_ASSERT(cpu_.h == cpu_.im);
+    });
+    rc::prop("calling ld_im<l>", [&cpu_, &m]() {
+      cpu_.im = *rc::gen::arbitrary<u8>();
+
+      ld_im<l>(cpu_, m);
+
+      RC_ASSERT(cpu_.l == cpu_.im);
+    });
+    rc::prop("calling ld_im<at_hl>", [&cpu_, &m]() {
+      cpu_.im = *rc::gen::arbitrary<u8>();
+      cpu_.hl = *rc::gen::inRange<u16>(0xc000, 0xcfff - 1);
+
+      ld_im<at_hl>(cpu_, m);
+
+      RC_ASSERT(m.read_u8(cpu_.hl) == cpu_.im);
+    });
+    rc::prop("calling ld_im<a>", [&cpu_, &m]() {
+      cpu_.im = *rc::gen::arbitrary<u8>();
+
+      ld_im<a>(cpu_, m);
+
+      RC_ASSERT(cpu_.a == cpu_.im);
+    });
+  }
+}

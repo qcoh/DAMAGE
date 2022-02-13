@@ -43,7 +43,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0x05:
     goto not_implemented;
   case 0x06:
-    goto not_implemented;
+    ld_im<b>(m_cpu, m_mmu);
+    break;
   case 0x07:
     goto not_implemented;
   case 0x08:
@@ -59,7 +60,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0x0d:
     goto not_implemented;
   case 0x0e:
-    goto not_implemented;
+    ld_im<c>(m_cpu, m_mmu);
+    break;
   case 0x0f:
     goto not_implemented;
   case 0x10:
@@ -79,7 +81,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0x15:
     goto not_implemented;
   case 0x16:
-    goto not_implemented;
+    ld_im<d>(m_cpu, m_mmu);
+    break;
   case 0x17:
     goto not_implemented;
   case 0x18:
@@ -95,7 +98,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0x1d:
     goto not_implemented;
   case 0x1e:
-    goto not_implemented;
+    ld_im<e>(m_cpu, m_mmu);
+    break;
   case 0x1f:
     goto not_implemented;
   case 0x20:
@@ -115,7 +119,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0x25:
     goto not_implemented;
   case 0x26:
-    goto not_implemented;
+    ld_im<h>(m_cpu, m_mmu);
+    break;
   case 0x27:
     goto not_implemented;
   case 0x28:
@@ -131,7 +136,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0x2d:
     goto not_implemented;
   case 0x2e:
-    goto not_implemented;
+    ld_im<l>(m_cpu, m_mmu);
+    break;
   case 0x2f:
     goto not_implemented;
   case 0x30:
@@ -150,7 +156,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0x35:
     goto not_implemented;
   case 0x36:
-    goto not_implemented;
+    ld_im<at_hl>(m_cpu, m_mmu);
+    break;
   case 0x37:
     goto not_implemented;
   case 0x38:
@@ -166,7 +173,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0x3d:
     goto not_implemented;
   case 0x3e:
-    goto not_implemented;
+    ld_im<a>(m_cpu, m_mmu);
+    break;
   case 0x3f:
     goto not_implemented;
   case 0x40:

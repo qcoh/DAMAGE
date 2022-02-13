@@ -81,3 +81,13 @@ template <typename Register> void jr_n(cpu &cpu_, mmu &mmu_, Register r = {}) {
   cpu_.cc += 8;
   cpu_.pc += 2;
 }
+
+template <typename Register> void ld_im(cpu &cpu_, mmu &mmu_, Register r = {}) {
+  r.set(cpu_, mmu_, cpu_.im);
+
+  if constexpr (std::is_same<Register, at_hl>::value) {
+    cpu_.cc += 4;
+  }
+  cpu_.cc += 8;
+  cpu_.pc += 2;
+}
