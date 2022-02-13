@@ -3,6 +3,7 @@ set(SOURCES
 	test_bitref.cpp
 	test_memory.cpp
 	test_bios.cpp
+	test_mmu.cpp
 )
 
 add_executable(damage_test
