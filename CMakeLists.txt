@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(DAMAGE VERSION 0.1)
+set(CMAKE_BUILD_TYPE "Debug")
 
 set(SOURCES
 	src/lr35902.cpp
 	src/mmu.cpp
+	src/bios.cpp
 )
 
 add_library(damage_lib
