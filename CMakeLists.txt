@@ -7,6 +7,7 @@ set(SOURCES
 	src/lr35902.cpp
 	src/mmu.cpp
 	src/bios.cpp
+	src/romonly.cpp
 )
 
 add_library(damage_lib
