@@ -20,3 +20,8 @@ template <typename Register> void xor_(cpu &cpu_, mmu &mmu_, Register r = {}) {
   cpu_.cc += 3;
   cpu_.pc += 1;
 }
+
+template <typename Register>
+void inc_16(cpu &cpu_, mmu &mmu_, Register r = {}) {
+  r.set(cpu_, mmu_, r.get(cpu_, mmu_) + 1);
+}

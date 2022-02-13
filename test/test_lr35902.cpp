@@ -166,3 +166,48 @@ SCENARIO("xor") {
     });
   }
 }
+
+SCENARIO("inc_16") {
+  GIVEN("cpu, mmu") {
+    cpu c;
+
+    u8 bios_data[0x100] = {0};
+    bios b{std::begin(bios_data)};
+    u8 romonly_data[0x8000] = {0};
+    romonly r{std::begin(romonly_data)};
+    mmu m{b, r};
+
+    rc::prop("calling inc_16<bc>", [&c, &m]() {
+      const u16 rv = *rc::gen::arbitrary<u16>();
+
+      c.bc = rv;
+      inc_16<bc>(c, m);
+
+      RC_ASSERT(c.bc == static_cast<u16>(rv + 1));
+    });
+    rc::prop("calling inc_16<de>", [&c, &m]() {
+      const u16 rv = *rc::gen::arbitrary<u16>();
+
+      c.de = rv;
+      inc_16<de>(c, m);
+
+      RC_ASSERT(c.de == static_cast<u16>(rv + 1));
+    });
+    rc::prop("calling inc_16<hl>", [&c, &m]() {
+      const u16 rv = *rc::gen::arbitrary<u16>();
+
+      c.hl = rv;
+      inc_16<hl>(c, m);
+
+      RC_ASSERT(c.hl == static_cast<u16>(rv + 1));
+    });
+    rc::prop("calling inc_16<sp>", [&c, &m]() {
+      const u16 rv = *rc::gen::arbitrary<u16>();
+
+      c.sp = rv;
+      inc_16<sp>(c, m);
+
+      RC_ASSERT(c.sp == static_cast<u16>(rv + 1));
+    });
+  }
+}
