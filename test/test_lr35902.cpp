@@ -472,3 +472,24 @@ SCENARIO("ld im") {
     });
   }
 }
+
+SCENARIO("ld at c") {
+  GIVEN("cpu, mmu") {
+    cpu cpu_;
+
+    u8 bios_data[0x100] = {0};
+    bios bios_{std::begin(bios_data)};
+    u8 romonly_data[0x8000] = {0};
+    romonly r{std::begin(romonly_data)};
+    mmu m{bios_, r};
+
+    rc::prop("calling ld_at_c", [&cpu_, &m]() {
+      cpu_.a = *rc::gen::arbitrary<u8>();
+      cpu_.c = *rc::gen::inRange<u8>(0, 127);
+
+      ld_at_c(cpu_, m);
+
+      RC_ASSERT(m.read_u8(0xff00 + cpu_.c) == cpu_.a);
+    });
+  }
+}

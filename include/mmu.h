@@ -16,6 +16,7 @@ struct mmu : public memory<mmu> {
   mapper &m_mapper;
 
   u8 wram[0x1000];
+  u8 hram[0x80];
 
 private:
   // When the GameBoy starts, the bios is mapped to the region [0x0, 0x100).

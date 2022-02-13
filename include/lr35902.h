@@ -91,3 +91,9 @@ template <typename Register> void ld_im(cpu &cpu_, mmu &mmu_, Register r = {}) {
   cpu_.cc += 8;
   cpu_.pc += 2;
 }
+
+void ld_at_c(cpu &cpu_, mmu &mmu_) {
+  mmu_.write_u8(0xff00 + cpu_.c, cpu_.a);
+  cpu_.cc += 8;
+  cpu_.pc += 2;
+}

@@ -511,7 +511,8 @@ void gameboy::regular_step(u8 opcode) {
   case 0xe1:
     goto not_implemented;
   case 0xe2:
-    goto not_implemented;
+    ld_at_c(m_cpu, m_mmu);
+    break;
   case 0xe3:
     goto not_implemented;
   case 0xe4:
