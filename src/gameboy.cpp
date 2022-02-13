@@ -3,6 +3,7 @@
 #include "cpu.h"
 #include "lr35902.h"
 #include "mmu.h"
+#include "registers.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -359,21 +360,29 @@ void gameboy::step() {
   case 0xa7:
     goto not_implemented;
   case 0xa8:
-    goto not_implemented;
+    xor_<b>(m_cpu, m_mmu);
+    break;
   case 0xa9:
-    goto not_implemented;
+    xor_<c>(m_cpu, m_mmu);
+    break;
   case 0xaa:
-    goto not_implemented;
+    xor_<d>(m_cpu, m_mmu);
+    break;
   case 0xab:
-    goto not_implemented;
+    xor_<e>(m_cpu, m_mmu);
+    break;
   case 0xac:
-    goto not_implemented;
+    xor_<h>(m_cpu, m_mmu);
+    break;
   case 0xad:
-    goto not_implemented;
+    xor_<l>(m_cpu, m_mmu);
+    break;
   case 0xae:
-    goto not_implemented;
+    xor_<at_hl>(m_cpu, m_mmu);
+    break;
   case 0xaf:
-    goto not_implemented;
+    xor_<a>(m_cpu, m_mmu);
+    break;
   case 0xb0:
     goto not_implemented;
   case 0xb1:

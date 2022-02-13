@@ -15,6 +15,8 @@ struct mmu : public memory<mmu> {
   bios &m_bios;
   mapper &m_mapper;
 
+  u8 wram[0x1000];
+
 private:
   // When the GameBoy starts, the bios is mapped to the region [0x0, 0x100).
   // Once the program counter hits 0x100, the cartridge/mapper is mapped to that
