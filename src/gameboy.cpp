@@ -25,7 +25,8 @@ void gameboy::step() {
     ld_imm<bc>(m_cpu, m_mmu);
     break;
   case 0x02:
-    goto not_implemented;
+    ld_at_16<at_bc>(m_cpu, m_mmu);
+    break;
   case 0x03:
     inc_16<bc>(m_cpu, m_mmu);
     break;
@@ -59,7 +60,8 @@ void gameboy::step() {
     ld_imm<de>(m_cpu, m_mmu);
     break;
   case 0x12:
-    goto not_implemented;
+    ld_at_16<at_de>(m_cpu, m_mmu);
+    break;
   case 0x13:
     inc_16<de>(m_cpu, m_mmu);
     break;
@@ -93,7 +95,8 @@ void gameboy::step() {
     ld_imm<hl>(m_cpu, m_mmu);
     break;
   case 0x22:
-    goto not_implemented;
+    ldi_at_hl(m_cpu, m_mmu);
+    break;
   case 0x23:
     inc_16<hl>(m_cpu, m_mmu);
     break;
@@ -127,7 +130,8 @@ void gameboy::step() {
     ld_imm<sp>(m_cpu, m_mmu);
     break;
   case 0x32:
-    goto not_implemented;
+    ldd_at_hl(m_cpu, m_mmu);
+    break;
   case 0x33:
     inc_16<sp>(m_cpu, m_mmu);
     break;

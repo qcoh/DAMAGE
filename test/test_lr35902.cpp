@@ -211,3 +211,74 @@ SCENARIO("inc_16") {
     });
   }
 }
+
+SCENARIO("ld_at_16") {
+  GIVEN("cpu, mmu") {
+    cpu c;
+
+    u8 bios_data[0x100] = {0};
+    bios b{std::begin(bios_data)};
+    u8 romonly_data[0x8000] = {0};
+    romonly r{std::begin(romonly_data)};
+    mmu m{b, r};
+
+    rc::prop("calling ld_at_16<bc>", [&c, &m]() {
+      c.bc = *rc::gen::inRange<u16>(0xc000, 0xcfff);
+      c.a = *rc::gen::arbitrary<u8>();
+
+      ld_at_16<at_bc>(c, m);
+
+      RC_ASSERT(m.read_u8(c.bc) == c.a);
+    });
+    rc::prop("calling ld_at_16<de>", [&c, &m]() {
+      c.de = *rc::gen::inRange<u16>(0xc000, 0xcfff);
+      c.a = *rc::gen::arbitrary<u8>();
+
+      ld_at_16<at_de>(c, m);
+
+      RC_ASSERT(m.read_u8(c.de) == c.a);
+    });
+  }
+}
+
+SCENARIO("ldi_at_hl") {
+  GIVEN("cpu, mmu") {
+    cpu c;
+
+    u8 bios_data[0x100] = {0};
+    bios b{std::begin(bios_data)};
+    u8 romonly_data[0x8000] = {0};
+    romonly r{std::begin(romonly_data)};
+    mmu m{b, r};
+
+    rc::prop("calling ldi_at_16<bc>", [&c, &m]() {
+      c.hl = *rc::gen::inRange<u16>(0xc001, 0xcfff - 2);
+      c.a = *rc::gen::arbitrary<u8>();
+
+      ldi_at_hl(c, m);
+
+      RC_ASSERT(m.read_u8(c.hl - 1) == c.a);
+    });
+  }
+}
+
+SCENARIO("ldd_at_hl") {
+  GIVEN("cpu, mmu") {
+    cpu c;
+
+    u8 bios_data[0x100] = {0};
+    bios b{std::begin(bios_data)};
+    u8 romonly_data[0x8000] = {0};
+    romonly r{std::begin(romonly_data)};
+    mmu m{b, r};
+
+    rc::prop("calling ldd_at_16<bc>", [&c, &m]() {
+      c.hl = *rc::gen::inRange<u16>(0xc001, 0xcfff - 2);
+      c.a = *rc::gen::arbitrary<u8>();
+
+      ldd_at_hl(c, m);
+
+      RC_ASSERT(m.read_u8(c.hl + 1) == c.a);
+    });
+  }
+}

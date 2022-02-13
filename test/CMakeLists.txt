@@ -23,6 +23,11 @@ target_link_libraries(damage_test
 	rapidcheck
 )
 
+target_compile_features(damage_test
+	PRIVATE
+	cxx_constexpr
+)
+
 include(CTest)
 include(Catch)
 catch_discover_tests(damage_test)

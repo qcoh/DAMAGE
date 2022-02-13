@@ -21,6 +21,11 @@ target_include_directories(damage_lib
 	"${CMAKE_SOURCE_DIR}/include"
 )
 
+target_compile_features(damage_lib
+	PRIVATE
+	cxx_constexpr
+)
+
 add_executable(damage
 	src/damage.cpp
 )

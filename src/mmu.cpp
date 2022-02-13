@@ -13,7 +13,7 @@ u8 mmu::read_u8(u16 address) {
     return (this->*m_strategy)(address);
   } else if (0x100 <= address && address < 0x3fff) {
     return m_mapper.read_u8(address);
-  } else if (0xc000 <= address && address <= 0xcfff) {
+  } else if (0xc000 <= address && address < 0xcfff) {
     return wram[address - 0xc000];
   }
   return 0;
@@ -21,7 +21,7 @@ u8 mmu::read_u8(u16 address) {
 void mmu::write_u8(u16 address, u8 v) {
   if (0x0 <= address && address < 0x3fff) {
     m_mapper.write_u8(address, v);
-  } else if (0xc000 <= address && address <= 0xcfff) {
+  } else if (0xc000 <= address && address < 0xcfff) {
     wram[address - 0xc000] = v;
   }
 }

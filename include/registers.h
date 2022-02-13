@@ -55,6 +55,16 @@ struct sp {
   void set(cpu &cpu_, mmu &, u16 v) { cpu_.sp = v; }
 };
 
+struct at_bc {
+  u8 get(cpu &cpu_, mmu &mmu_) { return mmu_.read_u8(cpu_.bc); }
+  void set(cpu &cpu_, mmu &mmu_, u8 v) { mmu_.write_u8(cpu_.bc, v); }
+};
+
+struct at_de {
+  u8 get(cpu &cpu_, mmu &mmu_) { return mmu_.read_u8(cpu_.de); }
+  void set(cpu &cpu_, mmu &mmu_, u8 v) { mmu_.write_u8(cpu_.de, v); }
+};
+
 struct at_hl {
   u8 get(cpu &cpu_, mmu &mmu_) { return mmu_.read_u8(cpu_.hl); }
   void set(cpu &cpu_, mmu &mmu_, u8 v) { mmu_.write_u8(cpu_.hl, v); }
