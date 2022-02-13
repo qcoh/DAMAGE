@@ -18,4 +18,8 @@ int main(int argc, char *argv[]) {
   cpu cpu_;
 
   gameboy gameboy_{cpu_, mmu_};
+
+  while (!gameboy_.stopped) {
+    gameboy_.step();
+  }
 }

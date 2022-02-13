@@ -4,6 +4,7 @@ set(SOURCES
 	test_memory.cpp
 	test_bios.cpp
 	test_mmu.cpp
+	test_lr35902.cpp
 )
 
 add_executable(damage_test

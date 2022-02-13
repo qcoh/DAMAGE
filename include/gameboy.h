@@ -10,4 +10,6 @@ struct gameboy {
 
   cpu &m_cpu;
   mmu &m_mmu;
+
+  bool stopped = false;
 };

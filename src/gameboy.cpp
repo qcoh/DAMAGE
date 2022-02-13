@@ -1,6 +1,7 @@
 #include "gameboy.h"
 
 #include "cpu.h"
+#include "lr35902.h"
 #include "mmu.h"
 
 #include <cstdio>
@@ -10,11 +11,18 @@ gameboy::gameboy(cpu &cpu_, mmu &mmu_) : m_cpu{cpu_}, m_mmu{mmu_} {}
 
 void gameboy::step() {
   const u8 opcode = m_mmu.read_u8(m_cpu.pc);
+
+  // TODO: this might cause problems with toggling the mmu from bios to
+  // cartridge mode!
+  m_cpu.im = m_mmu.read_u8(m_cpu.pc + 1);
+  m_cpu.imm = m_mmu.read_u8(m_cpu.pc + 1);
+
   switch (opcode) {
   case 0x00:
     goto not_implemented;
   case 0x01:
-    goto not_implemented;
+    ld_imm<bc>(m_cpu, m_mmu);
+    break;
   case 0x02:
     goto not_implemented;
   case 0x03:
@@ -46,7 +54,8 @@ void gameboy::step() {
   case 0x10:
     goto not_implemented;
   case 0x11:
-    goto not_implemented;
+    ld_imm<de>(m_cpu, m_mmu);
+    break;
   case 0x12:
     goto not_implemented;
   case 0x13:
@@ -78,7 +87,8 @@ void gameboy::step() {
   case 0x20:
     goto not_implemented;
   case 0x21:
-    goto not_implemented;
+    ld_imm<hl>(m_cpu, m_mmu);
+    break;
   case 0x22:
     goto not_implemented;
   case 0x23:
@@ -110,7 +120,8 @@ void gameboy::step() {
   case 0x30:
     goto not_implemented;
   case 0x31:
-    goto not_implemented;
+    ld_imm<sp>(m_cpu, m_mmu);
+    break;
   case 0x32:
     goto not_implemented;
   case 0x33:
