@@ -97,3 +97,16 @@ void ld_at_c(cpu &cpu_, mmu &mmu_) {
   cpu_.cc += 8;
   cpu_.pc += 2;
 }
+
+template <typename Dst, typename Src>
+void ld(cpu &cpu_, mmu &mmu_, Dst dst = {}, Src src = {}) {
+  dst.set(cpu_, mmu_, src.get(cpu_, mmu_));
+
+  if constexpr (std::is_same<Dst, at_hl>::value ||
+                std::is_same<Src, at_hl>::value) {
+    cpu_.cc += 4;
+  }
+
+  cpu_.cc += 4;
+  cpu_.pc += 1;
+}

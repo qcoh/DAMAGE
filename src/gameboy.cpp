@@ -178,134 +178,196 @@ void gameboy::regular_step(u8 opcode) {
   case 0x3f:
     goto not_implemented;
   case 0x40:
-    goto not_implemented;
+    ld<b, b>(m_cpu, m_mmu);
+    break;
   case 0x41:
-    goto not_implemented;
+    ld<b, c>(m_cpu, m_mmu);
+    break;
   case 0x42:
-    goto not_implemented;
+    ld<b, d>(m_cpu, m_mmu);
+    break;
   case 0x43:
-    goto not_implemented;
+    ld<b, e>(m_cpu, m_mmu);
+    break;
   case 0x44:
-    goto not_implemented;
+    ld<b, h>(m_cpu, m_mmu);
+    break;
   case 0x45:
-    goto not_implemented;
+    ld<b, l>(m_cpu, m_mmu);
+    break;
   case 0x46:
-    goto not_implemented;
+    ld<b, at_hl>(m_cpu, m_mmu);
+    break;
   case 0x47:
-    goto not_implemented;
+    ld<b, a>(m_cpu, m_mmu);
+    break;
   case 0x48:
-    goto not_implemented;
+    ld<c, b>(m_cpu, m_mmu);
+    break;
   case 0x49:
-    goto not_implemented;
+    ld<c, c>(m_cpu, m_mmu);
+    break;
   case 0x4a:
-    goto not_implemented;
+    ld<c, d>(m_cpu, m_mmu);
+    break;
   case 0x4b:
-    goto not_implemented;
+    ld<c, e>(m_cpu, m_mmu);
+    break;
   case 0x4c:
-    goto not_implemented;
+    ld<c, h>(m_cpu, m_mmu);
+    break;
   case 0x4d:
-    goto not_implemented;
+    ld<c, l>(m_cpu, m_mmu);
+    break;
   case 0x4e:
-    goto not_implemented;
+    ld<c, at_hl>(m_cpu, m_mmu);
+    break;
   case 0x4f:
-    goto not_implemented;
+    ld<c, a>(m_cpu, m_mmu);
+    break;
   case 0x50:
-    goto not_implemented;
+    ld<d, b>(m_cpu, m_mmu);
+    break;
   case 0x51:
-    goto not_implemented;
+    ld<d, c>(m_cpu, m_mmu);
+    break;
   case 0x52:
-    goto not_implemented;
+    ld<d, d>(m_cpu, m_mmu);
+    break;
   case 0x53:
-    goto not_implemented;
+    ld<d, e>(m_cpu, m_mmu);
+    break;
   case 0x54:
-    goto not_implemented;
+    ld<d, h>(m_cpu, m_mmu);
+    break;
   case 0x55:
-    goto not_implemented;
+    ld<d, l>(m_cpu, m_mmu);
+    break;
   case 0x56:
-    goto not_implemented;
+    ld<d, at_hl>(m_cpu, m_mmu);
+    break;
   case 0x57:
-    goto not_implemented;
+    ld<d, a>(m_cpu, m_mmu);
+    break;
   case 0x58:
-    goto not_implemented;
+    ld<e, b>(m_cpu, m_mmu);
+    break;
   case 0x59:
-    goto not_implemented;
+    ld<e, c>(m_cpu, m_mmu);
+    break;
   case 0x5a:
-    goto not_implemented;
+    ld<e, d>(m_cpu, m_mmu);
+    break;
   case 0x5b:
-    goto not_implemented;
+    ld<e, e>(m_cpu, m_mmu);
+    break;
   case 0x5c:
-    goto not_implemented;
+    ld<e, h>(m_cpu, m_mmu);
+    break;
   case 0x5d:
-    goto not_implemented;
+    ld<e, l>(m_cpu, m_mmu);
+    break;
   case 0x5e:
-    goto not_implemented;
+    ld<e, at_hl>(m_cpu, m_mmu);
+    break;
   case 0x5f:
-    goto not_implemented;
+    ld<e, a>(m_cpu, m_mmu);
+    break;
   case 0x60:
-    goto not_implemented;
+    ld<h, b>(m_cpu, m_mmu);
+    break;
   case 0x61:
-    goto not_implemented;
+    ld<h, c>(m_cpu, m_mmu);
+    break;
   case 0x62:
-    goto not_implemented;
+    ld<h, d>(m_cpu, m_mmu);
+    break;
   case 0x63:
-    goto not_implemented;
+    ld<h, e>(m_cpu, m_mmu);
+    break;
   case 0x64:
-    goto not_implemented;
+    ld<h, h>(m_cpu, m_mmu);
+    break;
   case 0x65:
-    goto not_implemented;
+    ld<h, l>(m_cpu, m_mmu);
+    break;
   case 0x66:
-    goto not_implemented;
+    ld<h, at_hl>(m_cpu, m_mmu);
+    break;
   case 0x67:
-    goto not_implemented;
+    ld<h, a>(m_cpu, m_mmu);
+    break;
   case 0x68:
-    goto not_implemented;
+    ld<l, b>(m_cpu, m_mmu);
+    break;
   case 0x69:
-    goto not_implemented;
+    ld<l, c>(m_cpu, m_mmu);
+    break;
   case 0x6a:
-    goto not_implemented;
+    ld<l, d>(m_cpu, m_mmu);
+    break;
   case 0x6b:
-    goto not_implemented;
+    ld<l, e>(m_cpu, m_mmu);
+    break;
   case 0x6c:
-    goto not_implemented;
+    ld<l, h>(m_cpu, m_mmu);
+    break;
   case 0x6d:
-    goto not_implemented;
+    ld<l, l>(m_cpu, m_mmu);
+    break;
   case 0x6e:
-    goto not_implemented;
+    ld<l, at_hl>(m_cpu, m_mmu);
+    break;
   case 0x6f:
-    goto not_implemented;
+    ld<l, a>(m_cpu, m_mmu);
+    break;
   case 0x70:
-    goto not_implemented;
+    ld<at_hl, b>(m_cpu, m_mmu);
+    break;
   case 0x71:
-    goto not_implemented;
+    ld<at_hl, c>(m_cpu, m_mmu);
+    break;
   case 0x72:
-    goto not_implemented;
+    ld<at_hl, d>(m_cpu, m_mmu);
+    break;
   case 0x73:
-    goto not_implemented;
+    ld<at_hl, e>(m_cpu, m_mmu);
+    break;
   case 0x74:
-    goto not_implemented;
+    ld<at_hl, h>(m_cpu, m_mmu);
+    break;
   case 0x75:
-    goto not_implemented;
+    ld<at_hl, l>(m_cpu, m_mmu);
+    break;
   case 0x76:
     goto not_implemented;
   case 0x77:
-    goto not_implemented;
+    ld<at_hl, a>(m_cpu, m_mmu);
+    break;
   case 0x78:
-    goto not_implemented;
+    ld<a, b>(m_cpu, m_mmu);
+    break;
   case 0x79:
-    goto not_implemented;
+    ld<a, c>(m_cpu, m_mmu);
+    break;
   case 0x7a:
-    goto not_implemented;
+    ld<a, d>(m_cpu, m_mmu);
+    break;
   case 0x7b:
-    goto not_implemented;
+    ld<a, e>(m_cpu, m_mmu);
+    break;
   case 0x7c:
-    goto not_implemented;
+    ld<a, h>(m_cpu, m_mmu);
+    break;
   case 0x7d:
-    goto not_implemented;
+    ld<a, l>(m_cpu, m_mmu);
+    break;
   case 0x7e:
-    goto not_implemented;
+    ld<a, at_hl>(m_cpu, m_mmu);
+    break;
   case 0x7f:
-    goto not_implemented;
-
+    ld<a, a>(m_cpu, m_mmu);
+    break;
   case 0x80:
     goto not_implemented;
   case 0x81:
@@ -573,7 +635,8 @@ void gameboy::regular_step(u8 opcode) {
     goto not_implemented;
   default:
   not_implemented:
-    std::printf("Instruction 0x%x not implemented!", opcode);
+    std::printf("Instruction 0x%x (at 0x%x) not implemented!", opcode,
+                m_cpu.pc);
     std::exit(EXIT_FAILURE);
   }
 }
@@ -1102,7 +1165,8 @@ void gameboy::extended_step(u8 opcode) {
     goto not_implemented;
   default:
   not_implemented:
-    std::printf("Instruction 0xcb 0x%x not implemented!", opcode);
+    std::printf("Instruction 0x%x (at 0x%x) not implemented!", opcode,
+                m_cpu.pc);
     std::exit(EXIT_FAILURE);
   }
 }
