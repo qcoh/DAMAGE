@@ -4,6 +4,7 @@ project(DAMAGE VERSION 0.1)
 
 set(SOURCES
 	src/lr35902.cpp
+	src/mmu.cpp
 )
 
 add_library(damage_lib
