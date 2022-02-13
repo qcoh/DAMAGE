@@ -21,6 +21,15 @@ target_include_directories(damage_lib
 	"${CMAKE_SOURCE_DIR}/include"
 )
 
+add_executable(damage
+	src/damage.cpp
+)
+
+target_link_libraries(damage
+	PRIVATE
+	damage_lib
+)
+
 # Tests
 
 add_subdirectory("third-party/Catch2")
